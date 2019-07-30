@@ -8,44 +8,62 @@
 
 import UIKit
 
-class PlayerTableViewController: UITableViewController {
+class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     
     var playerFetcherController = PlayerFetcherController()
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        playerFetcherController.fetchTeams {
-            print("fetchTeams implemented, this is closure in the call")
-        }
+        searchBar.delegate = self
         
+        playerFetcherController.fetchTeams {
+            
+            DispatchQueue.main.async {
+                print("fetchTeams implemented, this is closure in the call")
+                self.tableView.reloadData()
+            }
+        }
+        self.tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
+    
+    
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        // #warning Incomplete implementation, return the number of sections
+//        return 0
+//    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        print(playerFetcherController.allTeams.count)
+        return playerFetcherController.allTeams.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BallerCell", for: indexPath)
+        
+        let team = playerFetcherController.allTeams[indexPath.row]
 
-        // Configure the cell...
+        cell.textLabel?.text = team.name
+        cell.detailTextLabel?.text = team.id
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

@@ -63,33 +63,26 @@ class PlayerFetcherController {
                 
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
-                // parse the data into team ids which API requirs to fetch players
-                //print(league)
-                
-                // I think i'll need nested for loops, or nested compactMaps
+                // Try HIGHER ORDER FUNCTIONS LATER: see code snippet below, commented-out
                 for conference in league.conferences {
                     for division in conference.divisions {
                         for team in division.teams {
                             self.teamsDictionary[team.name] = team.id
-                            print("\(team.name): \(team.id), ")
+                            self.allTeams.append(team)
                         }
                     }
                 }
-                
-                
-//                for division in league.conferences.divisions {
-//                    guard let team = division
-//                }
-                //     let bookings = activeDeals
-//                .map { $0.bookings } // Gets the arrays of bookings
-//                    .compactMap { $0 }   // Gets rid of the nils
-//                    .flatMap { $0 }
+                for (key, value) in self.teamsDictionary {
+                    print("\(key), \(value) ")
+                }
+                print("allTeams: \(self.allTeams)")
                 
                 
             } catch let decodingError {
                 NSLog("Error decoding data to Heirarchy model: \(decodingError)")
                 completion()
             }
+            completion()
             
         }.resume()
         // Assemble URL
@@ -98,3 +91,12 @@ class PlayerFetcherController {
         // call for heirarchy, break json down into conference, division, team to get team id
         // then call featchPlayers with all 30 team id to get all the player id
 }
+
+
+
+
+
+//     let bookings = activeDeals
+//                .map { $0.bookings } // Gets the arrays of bookings
+//                    .compactMap { $0 }   // Gets rid of the nils
+//                    .flatMap { $0 }
