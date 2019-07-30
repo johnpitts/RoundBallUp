@@ -8,10 +8,15 @@
 
 import Foundation
 
-class League {
+struct League {
+    var conferences: [Division]
     
-    let 
-    
-    
-    
+    struct Division {
+        let teams: [Team]
+        
+        struct Team {
+            let name: String
+            let id: String
+        }
+    }
 }
