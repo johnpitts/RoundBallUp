@@ -8,15 +8,19 @@
 
 import Foundation
 
-struct League {
-    var conferences: [Division]
+struct Heirarchy {
+    var conferences: [Conference]
     
-    struct Division {
-        let teams: [Team]
+    struct Conference {
+        let divisions: [Division]
         
-        struct Team {
-            let name: String
-            let id: String
+        struct Division {
+            let teams: [Team]
+            
+            struct Team {
+                let name: String
+                let id: String
+            }
         }
     }
 }

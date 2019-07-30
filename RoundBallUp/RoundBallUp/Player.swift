@@ -8,7 +8,6 @@
 
 import Foundation
 
-// decoder.keyDecodingStrategy = .convertFromSnakeCase
 
 class Player {
     
