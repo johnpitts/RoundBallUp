@@ -15,8 +15,14 @@ class PlayerTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        playerFetcherController.fetchTeams {
+            print("fetchTeams implemented, this is closure in the call")
+        }
         
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
     }
 
     // MARK: - Table view data source

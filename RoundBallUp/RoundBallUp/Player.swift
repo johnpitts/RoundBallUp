@@ -14,7 +14,7 @@ class Player {
     var fullName: String   // ie) Karl-Anthony Towns
     var id: String                     // sportRadar api lists it as GUID
     
-    var minutes: Int
+    var minutes: Double?
     var points: Int
     var offensiveRebounds: Int
     var defensiveRebounds: Int
@@ -30,10 +30,10 @@ class Player {
     var freeThrowsMade: Int
     var freeThrowsAtt: Int
     
-    var scorePerMin: Double
+    //var scorePerMin: Double
     
     
-    init(fullName: String, id: String, minutes: String, points: Int, offensiveRebounds: Int, defensiveRebounds: Int, steals: Int, assists: Int, blocks: Int, turnovers: Int, personalFouls: Int, fieldGoalsMade: Int, fieldGoalsAtt: Int, freeThrowsMade: Int, freeThrowsAtt: Int, scorePerMin: Double) {
+    init(fullName: String, id: String, minutes: String, points: Int, offensiveRebounds: Int, defensiveRebounds: Int, steals: Int, assists: Int, blocks: Int, turnovers: Int, personalFouls: Int, fieldGoalsMade: Int, fieldGoalsAtt: Int, freeThrowsMade: Int, freeThrowsAtt: Int/*, scorePerMin: Double*/) {
         
         self.fullName = fullName
         self.id = id
@@ -51,6 +51,6 @@ class Player {
         self.freeThrowsMade = freeThrowsMade
         self.freeThrowsAtt = freeThrowsAtt
         
-        self.scorePerMin = (points - fieldGoalsAtt - 0.5*freeThrowsAtt - 0.5*personalFouls + offensiveRebounds + defensiveRebounds + 0.5*assists + steals + 0.5 * blocks - turnovers)/Double(minutes)
+        //self.scorePerMin = (points - fieldGoalsAtt - (0.5*freeThrowsAtt) - (0.5*personalFouls) + offensiveRebounds + defensiveRebounds + (0.5*assists) + steals + (0.5 * blocks) - turnovers)/7.0
     }
 }
