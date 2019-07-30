@@ -15,42 +15,43 @@ class Player {
     var id: String                     // sportRadar api lists it as GUID
     
     var minutes: Double?
-    var points: Int
-    var offensiveRebounds: Int
-    var defensiveRebounds: Int
-    var steals: Int
-    var assists: Int
-    var blocks: Int
-    var turnovers: Int
-    var personalFouls: Int
+    var points: Double?
+    var offensiveRebounds: Double?
+    var defensiveRebounds: Double?
+    var steals: Double?
+    var assists: Double?
+    var blocks: Double?
+    var turnovers: Double?
+    var personalFouls: Double?
     
-    var fieldGoalsMade: Int
-    var fieldGoalsAtt: Int
+    var fieldGoalsMade: Double?
+    var fieldGoalsAtt: Double?
     
-    var freeThrowsMade: Int
-    var freeThrowsAtt: Int
+    var freeThrowsMade: Double?
+    var freeThrowsAtt: Double?
     
-    //var scorePerMin: Double
+    var scorePerMin: Double?
     
     
-    init(fullName: String, id: String, minutes: String, points: Int, offensiveRebounds: Int, defensiveRebounds: Int, steals: Int, assists: Int, blocks: Int, turnovers: Int, personalFouls: Int, fieldGoalsMade: Int, fieldGoalsAtt: Int, freeThrowsMade: Int, freeThrowsAtt: Int/*, scorePerMin: Double*/) {
+    init(fullName: String, id: String, minutes: String, points: String, offensiveRebounds: String, defensiveRebounds: String, steals: String, assists: String, blocks: String, turnovers: String, personalFouls: String, fieldGoalsMade: String, fieldGoalsAtt: String, freeThrowsMade: String, freeThrowsAtt: String) {
         
         self.fullName = fullName
         self.id = id
         self.minutes = Double(minutes)
-        self.points = points
-        self.offensiveRebounds = offensiveRebounds
-        self.defensiveRebounds = defensiveRebounds
-        self.steals = steals
-        self.assists = assists
-        self.blocks = blocks
-        self.turnovers = turnovers
-        self.personalFouls = personalFouls
-        self.fieldGoalsMade = fieldGoalsMade
-        self.fieldGoalsAtt = fieldGoalsAtt
-        self.freeThrowsMade = freeThrowsMade
-        self.freeThrowsAtt = freeThrowsAtt
+        self.points = Double(points)
+        self.offensiveRebounds = Double(offensiveRebounds)
+        self.defensiveRebounds = Double(defensiveRebounds)
+        self.steals = Double(steals)
+        self.assists = Double(assists)
+        self.blocks = Double(blocks)
+        self.turnovers = Double(turnovers)
+        self.personalFouls = Double(personalFouls)
+        self.fieldGoalsMade = Double(fieldGoalsMade)
+        self.fieldGoalsAtt = Double(fieldGoalsAtt)
+        self.freeThrowsMade = Double(freeThrowsMade)
+        self.freeThrowsAtt = Double(freeThrowsAtt)
         
-        //self.scorePerMin = (points - fieldGoalsAtt - (0.5*freeThrowsAtt) - (0.5*personalFouls) + offensiveRebounds + defensiveRebounds + (0.5*assists) + steals + (0.5 * blocks) - turnovers)/7.0
+        // convert everything to doubles
+        //self.scorePerMin = ((points - fieldGoalsAtt - (0.5 * freeThrowsAtt) - (0.5 * personalFouls) + offensiveRebounds + defensiveRebounds + (0.5 * assists) + steals + (0.5 * blocks) - turnovers)) / 7.0 /*Double(minutes)*/
     }
 }

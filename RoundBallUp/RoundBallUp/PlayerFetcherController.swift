@@ -16,6 +16,8 @@ class PlayerFetcherController {
     
     var allTeams: [Heirarchy.Conference.Division.Team] = []      // i can't believe that worked!
     
+    var teamsDictionary: [ String : String ] = [:]
+    
     
     let baseURL = URL(string: "http://api.sportradar.us/nba/trial/v5/en/")!
     let apiKey = "dzb42xyudwxeaa4a9nxey5bg"
@@ -36,7 +38,7 @@ class PlayerFetcherController {
             return
         }
         
-        print("fetch URL: \n\(url)\n")
+        //print("fetch URL: \n\(url)\n")
         
         let request = URLRequest(url: url)
         
@@ -62,8 +64,19 @@ class PlayerFetcherController {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 // parse the data into team ids which API requirs to fetch players
-                print(league)
+                //print(league)
+                
                 // I think i'll need nested for loops, or nested compactMaps
+                for conference in league.conferences {
+                    for division in conference.divisions {
+                        for team in division.teams {
+                            self.teamsDictionary[team.name] = team.id
+                            print("\(team.name): \(team.id), ")
+                        }
+                    }
+                }
+                
+                
 //                for division in league.conferences.divisions {
 //                    guard let team = division
 //                }
