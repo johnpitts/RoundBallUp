@@ -104,7 +104,7 @@ class PlayerFetcherController {
             components?.queryItems = [keyQuery]
             
             guard let url = components?.url else {
-                NSLog("components of url failed to load properly")
+                NSLog("components of  playerID loader url failed to load properly")
                 completion()
                 return
             }
@@ -116,7 +116,7 @@ class PlayerFetcherController {
             URLSession.shared.dataTask(with: request) { (data, _, error) -> Void in
                 
                 if let error = error {
-                    NSLog("Error fetching team heirarchy \(error)")
+                    NSLog("Error URLSession dataTask fetching Player IDs \(error)")
                     completion()
                     return
                 }
@@ -145,13 +145,13 @@ class PlayerFetcherController {
                     print("allPlayers: \(self.allPlayers)")
                     
                 } catch let decodingError {
-                    NSLog("Error decoding data to Heirarchy model: \(decodingError)")
+                    NSLog("Error decoding data to PLAYER model: \(decodingError)")
                     completion()
                 }
                 completion()
                 
                 }.resume()
-        }
+        } // end for-loop
         
         
     }

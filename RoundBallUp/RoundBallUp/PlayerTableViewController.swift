@@ -22,31 +22,30 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
         
         playerFetcherController.fetchTeamIDs {
             
-            DispatchQueue.main.async {
                 print("TEAM IDS FETCHED")
-                self.tableView.reloadData()
-            }
+            
+                print("commence player id fetching")                // Need order of OPERATIONS here, player IDs dependent on Team IDs
+                self.playerFetcherController.fetchPlayerIDs {
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
         }
-
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(true)
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(true)
 //
-//        print("commence player id fetching")                // Need order of OPERATIONS here, player IDs dependent on Team IDs
-//        playerFetcherController.fetchPlayerIDs {
+//        DispatchQueue.main.async {
 //            self.tableView.reloadData()
 //        }
+//    }
+//
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(true)
 //    }
     
     
@@ -60,16 +59,16 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(playerFetcherController.allTeams.count)
-        return playerFetcherController.allTeams.count
+        return playerFetcherController.allPlayers.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BallerCell", for: indexPath)
         
-        let object = playerFetcherController.allTeams[indexPath.row]
+        let object = playerFetcherController.allPlayers[indexPath.row]
 
-        cell.textLabel?.text = object.name
+        cell.textLabel?.text = object.fullName
         cell.detailTextLabel?.text = object.id
 
         return cell
