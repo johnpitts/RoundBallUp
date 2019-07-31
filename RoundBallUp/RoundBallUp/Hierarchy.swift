@@ -21,6 +21,7 @@ struct Heirarchy: Codable {
             struct Team: Codable {
                 let name: String
                 let id: String
+                //var players: [Player]
             }
         }
     }

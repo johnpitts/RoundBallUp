@@ -15,16 +15,18 @@ class PlayerFetcherController {
     var players: [Player] = []
     
     var allTeams: [Heirarchy.Conference.Division.Team] = []      // i can't believe that worked!
+    var allPlayers: [Player] = []
     
     var teamsDictionary: [ String : String ] = [:]
+    var playersDictionary: [ String : String ] = [:]
     
     
     let baseURL = URL(string: "http://api.sportradar.us/nba/trial/v5/en/")!
     let apiKey = "dzb42xyudwxeaa4a9nxey5bg"
+    typealias completionHandler = ()->Void
     
     
-    
-    func fetchTeams(completion: @escaping () -> Void) {
+    func fetchTeamIDs(completion: @escaping completionHandler) {
         
         //URL Formatting:      ?? what is the difference between PathComponent and PathExtension?
         let heirarchyURL = baseURL.appendingPathComponent("league").appendingPathComponent("hierarchy").appendingPathExtension("json")
@@ -75,8 +77,7 @@ class PlayerFetcherController {
                 for (key, value) in self.teamsDictionary {
                     print("\(key), \(value) ")
                 }
-                print("allTeams: \(self.allTeams)")
-                
+                //print("allTeams: \(self.allTeams)")
                 
             } catch let decodingError {
                 NSLog("Error decoding data to Heirarchy model: \(decodingError)")
@@ -86,10 +87,86 @@ class PlayerFetcherController {
             
         }.resume()
         // Assemble URL
+    }
+
+    
+    // then call featchPlayers with all 30 team id to get all the player id
+    func fetchPlayerIDs(completion: @escaping completionHandler) {
+        
+        // Loop thru all 30 teams, which requires changing the URL each time
+        for team in teamsDictionary {
+            
+            // get players and player ids for one team
+            let teamID = team.value
+            let teamsURL = baseURL.appendingPathComponent("teams").appendingPathComponent(teamID).appendingPathComponent("profile").appendingPathExtension("json")
+            var components = URLComponents(url: teamsURL, resolvingAgainstBaseURL: true)
+            let keyQuery = URLQueryItem(name: "api_key", value: apiKey)
+            components?.queryItems = [keyQuery]
+            
+            guard let url = components?.url else {
+                NSLog("components of url failed to load properly")
+                completion()
+                return
+            }
+            
+            print("fetch URL: \n\(url)\n")
+            
+            let request = URLRequest(url: url)
+            
+            URLSession.shared.dataTask(with: request) { (data, _, error) -> Void in
+                
+                if let error = error {
+                    NSLog("Error fetching team heirarchy \(error)")
+                    completion()
+                    return
+                }
+                guard let data = data else {
+                    NSLog("Error data didn't exist")
+                    completion()
+                    return
+                }
+                
+                print(String(data: data, encoding: .utf8)!)      //Don't erase, want to save this for future usage
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let team = try decoder.decode([Player].self, from: data)
+                    
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
+                    for player in team {
+                        self.playersDictionary[player.fullName] = player.id
+                        self.allPlayers.append(player)
+                    }
+                    for (key, value) in self.playersDictionary {
+                        print("\(key), \(value) ")
+                    }
+                    print("\n")
+                    print("allPlayers: \(self.allPlayers)")
+                    
+                } catch let decodingError {
+                    NSLog("Error decoding data to Heirarchy model: \(decodingError)")
+                    completion()
+                }
+                completion()
+                
+                }.resume()
+        }
+        
         
     }
-        // call for heirarchy, break json down into conference, division, team to get team id
-        // then call featchPlayers with all 30 team id to get all the player id
+    
+    
+    func fetchOnePlayer(id: String) {
+        
+        // create URL using Player ID
+        
+        
+        // fetch the player's stats and initiate the player using his name, placing him into storage array
+        
+    }
+    
+    
 }
 
 

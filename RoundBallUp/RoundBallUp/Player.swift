@@ -9,7 +9,7 @@
 import Foundation
 
 
-class Player {
+class Player: Codable {
     
     var fullName: String   // ie) Karl-Anthony Towns
     var id: String                     // sportRadar api lists it as GUID

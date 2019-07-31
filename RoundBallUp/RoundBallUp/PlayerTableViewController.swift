@@ -20,15 +20,17 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
         
         searchBar.delegate = self
         
-        playerFetcherController.fetchTeams {
+        playerFetcherController.fetchTeamIDs {
             
             DispatchQueue.main.async {
-                print("fetchTeams implemented, this is closure in the call")
+                print("TEAM IDS FETCHED")
                 self.tableView.reloadData()
             }
         }
+
         self.tableView.reloadData()
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -37,6 +39,15 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
             self.tableView.reloadData()
         }
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(true)
+//
+//        print("commence player id fetching")                // Need order of OPERATIONS here, player IDs dependent on Team IDs
+//        playerFetcherController.fetchPlayerIDs {
+//            self.tableView.reloadData()
+//        }
+//    }
     
     
 
@@ -56,10 +67,10 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BallerCell", for: indexPath)
         
-        let team = playerFetcherController.allTeams[indexPath.row]
+        let object = playerFetcherController.allTeams[indexPath.row]
 
-        cell.textLabel?.text = team.name
-        cell.detailTextLabel?.text = team.id
+        cell.textLabel?.text = object.name
+        cell.detailTextLabel?.text = object.id
 
         return cell
     }
