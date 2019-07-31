@@ -109,7 +109,7 @@ class PlayerFetcherController {
                 return
             }
             
-            print("fetch URL: \n\(url)\n")
+            //print("fetch URL: \n\(url)\n")
             
             let request = URLRequest(url: url)
             
@@ -126,7 +126,7 @@ class PlayerFetcherController {
                     return
                 }
                 
-                print(String(data: data, encoding: .utf8)!)      //Don't erase, want to save this for future usage
+                //print(String(data: data, encoding: .utf8)!)      //Don't erase, want to save this for future usage
                 
                 do {
                     let decoder = JSONDecoder()
@@ -140,10 +140,10 @@ class PlayerFetcherController {
                         self.allPlayers.append(player)
                     }
                     for (key, value) in self.playersDictionary {
-                        print("\(key), \(value) ")
+                        print("\(key), \(value) \n ")
                     }
                     print("\n")
-                    print("allPlayers: \(self.allPlayers)")
+                    //print("allPlayers: \(self.allPlayers)")
                     
                 } catch let decodingError {
                     NSLog("Error decoding data to PLAYER model: \(decodingError)")
@@ -158,12 +158,69 @@ class PlayerFetcherController {
     }
     
     
-    func fetchOnePlayer(id: String) {
+    func fetchOnePlayer(id: String, completion: @escaping completionHandler) {
         
         // create URL using Player ID
+        let playerURL = baseURL.appendingPathComponent("players").appendingPathComponent(id).appendingPathComponent("profile").appendingPathExtension("json")
+        var components = URLComponents(url: playerURL, resolvingAgainstBaseURL: true)
+        let keyQuery = URLQueryItem(name: "api_key", value: apiKey)
+        components?.queryItems = [keyQuery]
+        
+        guard let url = components?.url else {
+            NSLog("components of  playerSTATS & BoxGrade loader url failed to load properly")
+            completion()
+            return
+        }
+        
+        print("fetch URL: \n\(url)\n")
+        
+        let request = URLRequest(url: url)
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) -> Void in
+            
+            if let error = error {
+                NSLog("Error URLSession dataTask fetching Player RoundballGrade STATS \(error)")
+                completion()
+                return
+            }
+            guard let data = data else {
+                NSLog("Error data didn't exist")
+                completion()
+                return
+            }
+            
+            print(String(data: data, encoding: .utf8)!)      //Don't erase, want to save this for future usage
+            
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let player = try decoder.decode(Player.self, from: data)
+                
+                
+                let playersOnThisTeam = team.players
+                for player in playersOnThisTeam {
+                    self.playersDictionary[player.fullName] = player.id
+                    self.allPlayers.append(player)
+                }
+                for (key, value) in self.playersDictionary {
+                    print("\(key), \(value) \n ")
+                }
+                print("\n")
+                //print("allPlayers: \(self.allPlayers)")
+                
+            } catch let decodingError {
+                NSLog("Error decoding data to PLAYER model: \(decodingError)")
+                completion()
+            }
+            completion()
+            
+            }.resume()
+    }  // end fetch one player's stats routine
+    
+    
+    func getWholeTeam(id: String) {
         
         
-        // fetch the player's stats and initiate the player using his name, placing him into storage array
         
     }
     

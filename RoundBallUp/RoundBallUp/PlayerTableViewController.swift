@@ -17,37 +17,45 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         searchBar.delegate = self
         
-        playerFetcherController.fetchTeamIDs {
+        playerFetcherController.fetchTeamIDs {    // TEAM ID get FIRST, in order to...
             
-                print("TEAM IDS FETCHED")
-            
-                print("commence player id fetching")                // Need order of OPERATIONS here, player IDs dependent on Team IDs
-                self.playerFetcherController.fetchPlayerIDs {
-                    
+                print("TEAM IDS FETCHED, commencing player ID fetch... \n")
+            // CLOSURES ARE GREAT! for allowing a new procedure to come after a former one which takes time, in this case Player ID get is dependent on Team ID get, so closure allows Team ID fetch to finish before Player ID fetch begins
+
+            self.playerFetcherController.fetchPlayerIDs { // ...PLAYER ID get NEXT.
+                
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
                 }
         }
-        //self.tableView.reloadData()
     }
     
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("search clicked")
+        /* search for player or team in
+        playerFetcherController.teamsDictionary
+        playerFetcherController.playersDictionary
+        
+        if teamFound {
+            self.tableView.reloadData() with players on team
+        } else if playerFound {
+            self.tableView.reloadData() with player
+        } else {
+            searchBar.placeholder = "Players/Teams not found, check for misspellings, typos & try again"
+        } */
+    }
+    
 //    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(true)
-//
+       //   searchBar.placeholder = "Enter Player or Team to get BoxGrade"
 //        DispatchQueue.main.async {
 //            self.tableView.reloadData()
 //        }
 //    }
-//
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(true)
-//    }
-    
     
 
     // MARK: - Table view data source
@@ -69,7 +77,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
         let object = playerFetcherController.allPlayers[indexPath.row]
 
         cell.textLabel?.text = object.fullName
-        cell.detailTextLabel?.text = object.id
+        //cell.detailTextLabel?.text = object.id
 
         return cell
     }
