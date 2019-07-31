@@ -15,6 +15,7 @@
 		FCD14E8722EFA15C0068C033 /* Hierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD14E8622EFA15C0068C033 /* Hierarchy.swift */; };
 		FCD14E8922EFB9140068C033 /* PlayerFetcherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD14E8822EFB9140068C033 /* PlayerFetcherController.swift */; };
 		FCD14E8B22EFBC250068C033 /* PlayerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD14E8A22EFBC250068C033 /* PlayerTableViewController.swift */; };
+		FCD14E8F22F1E2CE0068C033 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD14E8E22F1E2CE0068C033 /* Team.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,10 +25,11 @@
 		FCD14E7922EF616A0068C033 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FCD14E7C22EF616A0068C033 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FCD14E7E22EF616A0068C033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FCD14E8422EF8EAF0068C033 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		FCD14E8622EFA15C0068C033 /* Hierarchy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hierarchy.swift; sourceTree = "<group>"; };
-		FCD14E8822EFB9140068C033 /* PlayerFetcherController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFetcherController.swift; sourceTree = "<group>"; };
+		FCD14E8422EF8EAF0068C033 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Player.swift; path = ../Player.swift; sourceTree = "<group>"; };
+		FCD14E8622EFA15C0068C033 /* Hierarchy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Hierarchy.swift; path = ../Hierarchy.swift; sourceTree = "<group>"; };
+		FCD14E8822EFB9140068C033 /* PlayerFetcherController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlayerFetcherController.swift; path = ../PlayerFetcherController.swift; sourceTree = "<group>"; };
 		FCD14E8A22EFBC250068C033 /* PlayerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTableViewController.swift; sourceTree = "<group>"; };
+		FCD14E8E22F1E2CE0068C033 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,14 +65,31 @@
 				FCD14E7222EF61670068C033 /* AppDelegate.swift */,
 				FCD14E8A22EFBC250068C033 /* PlayerTableViewController.swift */,
 				FCD14E7622EF61670068C033 /* Main.storyboard */,
-				FCD14E8822EFB9140068C033 /* PlayerFetcherController.swift */,
-				FCD14E8422EF8EAF0068C033 /* Player.swift */,
-				FCD14E8622EFA15C0068C033 /* Hierarchy.swift */,
+				FCD14E8D22F1E0950068C033 /* New Group1 */,
+				FCD14E8C22F1E0800068C033 /* New Group */,
 				FCD14E7922EF616A0068C033 /* Assets.xcassets */,
 				FCD14E7B22EF616A0068C033 /* LaunchScreen.storyboard */,
 				FCD14E7E22EF616A0068C033 /* Info.plist */,
 			);
 			path = RoundBallUp;
+			sourceTree = "<group>";
+		};
+		FCD14E8C22F1E0800068C033 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				FCD14E8422EF8EAF0068C033 /* Player.swift */,
+				FCD14E8E22F1E2CE0068C033 /* Team.swift */,
+				FCD14E8622EFA15C0068C033 /* Hierarchy.swift */,
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		FCD14E8D22F1E0950068C033 /* New Group1 */ = {
+			isa = PBXGroup;
+			children = (
+				FCD14E8822EFB9140068C033 /* PlayerFetcherController.swift */,
+			);
+			path = "New Group1";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,6 +163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCD14E8F22F1E2CE0068C033 /* Team.swift in Sources */,
 				FCD14E8B22EFBC250068C033 /* PlayerTableViewController.swift in Sources */,
 				FCD14E8722EFA15C0068C033 /* Hierarchy.swift in Sources */,
 				FCD14E8522EF8EAF0068C033 /* Player.swift in Sources */,

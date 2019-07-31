@@ -15,10 +15,10 @@ class PlayerFetcherController {
     var players: [Player] = []
     
     var allTeams: [Heirarchy.Conference.Division.Team] = []      // i can't believe that worked!
-    var allPlayers: [Player] = []
+    var teamsDictionary: [ String : String ] = [:]               // (team) name : id
     
-    var teamsDictionary: [ String : String ] = [:]
-    var playersDictionary: [ String : String ] = [:]
+    var allPlayers: [Team.TeamPlayer] = []
+    var playersDictionary: [ String : String ] = [:]             // (player) fullName : id
     
     
     let baseURL = URL(string: "http://api.sportradar.us/nba/trial/v5/en/")!
@@ -130,11 +130,12 @@ class PlayerFetcherController {
                 
                 do {
                     let decoder = JSONDecoder()
-                    let team = try decoder.decode([Player].self, from: data)
-                    
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let team = try decoder.decode(Team.self, from: data)
                     
-                    for player in team {
+                    
+                    let playersOnThisTeam = team.players
+                    for player in playersOnThisTeam {
                         self.playersDictionary[player.fullName] = player.id
                         self.allPlayers.append(player)
                     }
