@@ -143,7 +143,7 @@ class PlayerFetcherController {
     }
     
     
-    func fetchOnePlayer(id: String, completion: @escaping ([Player]?, Error?) -> Void) {
+    func fetchOnePlayer(id: String, completion: @escaping (Player?, Error?) -> Void) {
         
         let playerURL = baseURL.appendingPathComponent("players").appendingPathComponent(id).appendingPathComponent("profile").appendingPathExtension("json")
         var components = URLComponents(url: playerURL, resolvingAgainstBaseURL: true)
@@ -175,16 +175,16 @@ class PlayerFetcherController {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let fetchedPlayer = try decoder.decode(Player.self, from: data)
                 
-                print("\(fetchedPlayer.lastName) points: \(Double(fetchedPlayer.seasons[0].teams[0].total.points))\n")
+                print("\(fetchedPlayer.lastName) points: \(Double(fetchedPlayer.seasons[0].teams[0].total.points))")
                 
                 let customGrade = self.calculateCustomGrade(forThis: fetchedPlayer)
-                
+                print("...and his grade is: \(customGrade)\n")
                 // initialize a player with added customGrade property, before saving to playersToShow
                 
                 self.playersToShow.append(fetchedPlayer)
                 print(self.playersToShow)
                 
-                completion(self.playersToShow, nil)
+                completion(fetchedPlayer, nil)
                 
             } catch let decodingError {
                 NSLog("Error decoding data to PLAYER model: \(decodingError)")

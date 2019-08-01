@@ -10,7 +10,16 @@ import UIKit
 
 class PlayerDetailViewController: UIViewController {
     
-    var playerShown: Player?
+    var playerShown: Player? {
+        didSet {
+            updateViews()
+        }
+    }
+    var playerFetcherController = PlayerFetcherController()
+    
+    @IBOutlet weak var playerNameLabel: UILabel!
+    @IBOutlet weak var gradeLabel: UILabel!
+    
     
     @IBOutlet weak var minutesLabel: UILabel!
     @IBOutlet weak var pointsLabel: UILabel!
@@ -21,18 +30,32 @@ class PlayerDetailViewController: UIViewController {
     @IBOutlet weak var turnoversLabel: UILabel!
     @IBOutlet weak var foulsLabel: UILabel!
     
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateViews()
+    }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    func updateViews() {
+        
+        
+        guard isViewLoaded,
+            let playerShown = playerShown else { return }
+        DispatchQueue.main.async {
+            self.playerNameLabel.text = playerShown.fullName
+            
+            self.gradeLabel.text = "\(self.playerFetcherController.calculateCustomGrade(forThis: playerShown))"   // fix with guard let
+            
+            //self.minutesLabel.text = playerShown.seasons[0].teams[0].total.minutes
+//            self.pointsLabel.text = playerShown.seasons[0].teams[0].total.points.toString()
+//            //reboundsLabel.text = ((playerShown?.seasons[0].teams[0].total.defensiveRebounds)! + (playerShown?.seasons[0].teams[0].total.offensiveRebounds)!).toString()               //not sure why I need ! solution
+//            self.assistsLabel.text = playerShown.seasons[0].teams[0].total.assists.toString()
+//            self.stealsLabel.text = playerShown.seasons[0].teams[0].total.steals.toString()
+//            self.blocksLabel.text = playerShown.seasons[0].teams[0].total.blocks.toString()
+//            self.foulsLabel.text = playerShown.seasons[0].teams[0].total.personalFouls.toString()
+            self.turnoversLabel.text = "\(playerShown.seasons[0].teams[0].total.turnovers)"
+        }
 
-        minutesLabel.text = playerShown?.seasons[0].teams[0].total.minutes.toString()
-        pointsLabel.text = playerShown?.seasons[0].teams[0].total.points.toString()
-        //reboundsLabel.text = ((playerShown?.seasons[0].teams[0].total.defensiveRebounds)! + (playerShown?.seasons[0].teams[0].total.offensiveRebounds)!).toString()               //not sure why I need ! solution
-        assistsLabel.text = playerShown?.seasons[0].teams[0].total.assists.toString()
-        stealsLabel.text = playerShown?.seasons[0].teams[0].total.steals.toString()
-        blocksLabel.text = playerShown?.seasons[0].teams[0].total.blocks.toString()
-        foulsLabel.text = playerShown?.seasons[0].teams[0].total.personalFouls.toString()
-        turnoversLabel.text = playerShown?.seasons[0].teams[0].total.turnovers.toString()
         
         //pointsLabel.text = String(playerShown?.seasons[0].teams[0].total.points)
         // = playerShown.seasons[0].teams[0].total.fieldGoalsAtt.toString
@@ -41,11 +64,11 @@ class PlayerDetailViewController: UIViewController {
     }
 }
 
-extension Double {
-    func toString() -> String {
-        return String(format: "$.1f", self)
-    }
-}
+//extension Double {
+//    func toString() -> String {
+//        return String(format: "$.lf, self)
+//    }
+//}
 
 
 

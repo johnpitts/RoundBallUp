@@ -15,6 +15,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     var playerForDetail: Player?
     
     @IBOutlet weak var searchBar: UISearchBar!
+    var ifSearch: Bool?
     
 
     override func viewDidLoad() {
@@ -90,7 +91,19 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
 //    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(playerFetcherController.allTeams.count)
+        print(playerFetcherController.allPlayers.count)
+        
+//        switch ifSearch {
+//        case <#pattern#>:
+//            <#code#>
+//        default:
+//            <#code#>
+//        }
+        
+        
+        
+        
+        
         return playerFetcherController.allPlayers.count
     }
 
@@ -156,10 +169,11 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
                     NSLog("error fetching one player's stats: \(error)")
                     return
                 }
+                self.playerForDetail = playerForDetail
                 detailVC.playerShown = self.playerForDetail
-            }
-            
+            }  // end of fetch
         }
     }
 
+    
 }
