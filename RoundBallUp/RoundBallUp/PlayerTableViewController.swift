@@ -11,6 +11,7 @@ import UIKit
 class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     
     var playerFetcherController = PlayerFetcherController()
+    var playersToShow: [Player]?
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -142,8 +143,12 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "PlayerDetail" {
+            guard let detailVC = segue.destination as? PlayerDetailViewController,
+                let indexPath = tableView.indexPathForSelectedRow else  { return }
+            
+            detailVC.playerShown = playersToShow?[indexPath.row]
+        }
     }
 
 }
