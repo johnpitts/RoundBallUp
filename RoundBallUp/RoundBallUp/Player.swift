@@ -18,7 +18,7 @@ class Player: Codable {
     var seasons: [Year]     // for version 0.1 we will ALWAYS being using the 0th value, which is 2018 NBA Year
     
     struct Year: Codable {
-        //let name: String           // ie) 2018, the json clearly shows this as an Int, so what gives?
+        let year: Int           // ie) 2018
         let teams: [Team]       // version 0.1 we will ALWAYS be using the 0th team, which is last team played during yr
         
         struct Team: Codable {

@@ -178,6 +178,7 @@ class PlayerFetcherController {
                 print("\(fetchedPlayer.lastName) points: \(Double(fetchedPlayer.seasons[0].teams[0].total.points))\n")
                 
                 self.playersToShow.append(fetchedPlayer)
+                print(self.playersToShow)
                 
                 completion(self.playersToShow, nil)
                 
