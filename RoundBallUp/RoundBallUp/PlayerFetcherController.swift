@@ -177,6 +177,8 @@ class PlayerFetcherController {
                 
                 print("\(fetchedPlayer.lastName) points: \(Double(fetchedPlayer.seasons[0].teams[0].total.points))\n")
                 
+                let customGrade = self.calculateCustomGrade(forThis: fetchedPlayer)
+                
                 self.playersToShow.append(fetchedPlayer)
                 print(self.playersToShow)
                 
@@ -187,6 +189,30 @@ class PlayerFetcherController {
                 completion(nil, error)
             }
         }.resume()
+    }
+    
+    
+    func calculateCustomGrade(forThis player: Player) -> Double {    // will need to add season parameter later
+        //typealias y18ft = seasons[0].teams[0].total
+        // use a delegate method to getCustomStatCoeffecients
+        let bCoeff = 0.5
+        let aCoeff = 0.5
+        let ftaCoeff = -0.5
+        let pfCoeff = -0.5
+        let rbVal = player.seasons[0].teams[0].total.defensiveRebounds + player.seasons[0].teams[0].total.offensiveRebounds
+        let p = player.seasons[0].teams[0].total.points
+        let a = player.seasons[0].teams[0].total.assists
+        let s = player.seasons[0].teams[0].total.steals
+        let pf = player.seasons[0].teams[0].total.personalFouls
+        let tov = player.seasons[0].teams[0].total.turnovers
+        let fga = player.seasons[0].teams[0].total.fieldGoalsAtt
+        let min = player.seasons[0].teams[0].total.minutes
+        let b = player.seasons[0].teams[0].total.blocks
+        let fta = player.seasons[0].teams[0].total.freeThrowsAtt
+        
+        let myCustomGrade = (p + rbVal + s - tov - fga + (bCoeff * b) + (aCoeff * a) + (ftaCoeff * fta) + (pfCoeff * pf)) / min
+        
+        return myCustomGrade
     }
     
     

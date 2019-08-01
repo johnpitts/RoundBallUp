@@ -52,6 +52,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
                     NSLog("error fetching one player's stats: \(error)")
                     return
                 }
+                
             
                 
             }

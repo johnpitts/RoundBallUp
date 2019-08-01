@@ -26,21 +26,21 @@ class Player: Codable {
             let total: Total
             
             struct Total: Codable {
-                var minutes: Double?
+                var minutes: Double
                 var points: Double
-                var offensiveRebounds: Double?
-                var defensiveRebounds: Double?
-                var steals: Double?
-                var assists: Double?
-                var blocks: Double?
-                var turnovers: Double?
-                var personalFouls: Double?
+                var offensiveRebounds: Double
+                var defensiveRebounds: Double
+                var steals: Double
+                var assists: Double
+                var blocks: Double
+                var turnovers: Double
+                var personalFouls: Double
                 
-                var fieldGoalsMade: Double?
-                var fieldGoalsAtt: Double?
+                var fieldGoalsMade: Double
+                var fieldGoalsAtt: Double
                 
-                var freeThrowsMade: Double?
-                var freeThrowsAtt: Double?
+                var freeThrowsMade: Double
+                var freeThrowsAtt: Double
                 
                 //var scorePerMin: Double?
             }
@@ -67,6 +67,7 @@ class Player: Codable {
 //        self.freeThrowsAtt = Double(freeThrowsAtt)
         
         // convert everything to doubles
+        
         //self.scorePerMin = ((points - fieldGoalsAtt - (0.5 * freeThrowsAtt) - (0.5 * personalFouls) + offensiveRebounds + defensiveRebounds + (0.5 * assists) + steals + (0.5 * blocks) - turnovers)) / 7.0 /*Double(minutes)*/
     }
 }
