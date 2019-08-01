@@ -42,8 +42,6 @@ class PlayerFetcherController {
             return
         }
         
-        //print("fetch URL: \n\(url)\n")
-        
         let request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { (data, _, error) -> Void in
@@ -58,16 +56,13 @@ class PlayerFetcherController {
                 completion()
                 return
             }
-            
-            //print(String(data: data, encoding: .utf8)!)      Don't erase, want to save this for future usage
-            
             do {
                 let decoder = JSONDecoder()
                 let league = try decoder.decode(Heirarchy.self, from: data)
                 
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
-                // Try HIGHER ORDER FUNCTIONS LATER: see code snippet below, commented-out
+                // Try HIGHER ORDER FUNCTIONS LATER: see code snippet at bottom of file, commented-out
                 for conference in league.conferences {
                     for division in conference.divisions {
                         for team in division.teams {
@@ -80,25 +75,22 @@ class PlayerFetcherController {
                     print("\(key), \(value) ")
                 }
                 //print("allTeams: \(self.allTeams)")
-                
             } catch let decodingError {
                 NSLog("Error decoding data to Heirarchy model: \(decodingError)")
                 completion()
             }
             completion()
-            
         }.resume()
-        // Assemble URL
     }
 
     
-    // then call featchPlayers with all 30 team id to get all the player id
     func fetchPlayerIDs(completion: @escaping completionHandler) {
+        // Use 30 team IDs to get 700+ Player IDs
         
         // Loop thru all 30 teams, which requires changing the URL each time
         for team in teamsDictionary {
             
-            // get players and player ids for one team
+            // get players / player ids for one team
             let teamID = team.value
             let teamsURL = baseURL.appendingPathComponent("teams").appendingPathComponent(teamID).appendingPathComponent("profile").appendingPathExtension("json")
             var components = URLComponents(url: teamsURL, resolvingAgainstBaseURL: true)
@@ -110,13 +102,9 @@ class PlayerFetcherController {
                 completion()
                 return
             }
-            
-            //print("fetch URL: \n\(url)\n")
-            
             let request = URLRequest(url: url)
             
             URLSession.shared.dataTask(with: request) { (data, _, error) -> Void in
-                
                 if let error = error {
                     NSLog("Error URLSession dataTask fetching Player IDs \(error)")
                     completion()
@@ -127,9 +115,6 @@ class PlayerFetcherController {
                     completion()
                     return
                 }
-                
-                //print(String(data: data, encoding: .utf8)!)      //Don't erase, want to save this for future usage
-                
                 do {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -154,15 +139,12 @@ class PlayerFetcherController {
                 completion()
                 
                 }.resume()
-        } // end for-loop
-        
-        
+        } // end for-loop aka 30-teams
     }
     
     
     func fetchOnePlayer(id: String, completion: @escaping ([Player]?, Error?) -> Void) {
         
-        // create URL using Player ID
         let playerURL = baseURL.appendingPathComponent("players").appendingPathComponent(id).appendingPathComponent("profile").appendingPathExtension("json")
         var components = URLComponents(url: playerURL, resolvingAgainstBaseURL: true)
         let keyQuery = URLQueryItem(name: "api_key", value: apiKey)
@@ -173,13 +155,10 @@ class PlayerFetcherController {
             completion(nil, nil)
             return
         }
-        
-        print("fetch URL: \n\(url)\n")
-        
+        //print("fetch URL: \n\(url)\n")
         let request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { (data, _, error) -> Void in
-            
             if let error = error {
                 NSLog("Error URLSession dataTask fetching Player RoundballGrade STATS \(error)")
                 completion(nil, error)
@@ -190,9 +169,7 @@ class PlayerFetcherController {
                 completion(nil, error)
                 return
             }
-            
-            print(String(data: data, encoding: .utf8)!)      //Don't erase, want to save this for future usage
-            
+            //print(String(data: data, encoding: .utf8)!)      //Don't erase, want to save this for future usage
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -203,7 +180,6 @@ class PlayerFetcherController {
                 self.playersToShow.append(fetchedPlayer)
                 
                 completion(self.playersToShow, nil)
-                
                 
             } catch let decodingError {
                 NSLog("Error decoding data to PLAYER model: \(decodingError)")
