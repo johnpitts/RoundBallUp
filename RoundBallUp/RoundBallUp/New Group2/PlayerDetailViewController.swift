@@ -22,12 +22,12 @@ class PlayerDetailViewController: UIViewController {
     @IBOutlet weak var foulsLabel: UILabel!
     
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
 
         minutesLabel.text = playerShown?.seasons[0].teams[0].total.minutes.toString()
         pointsLabel.text = playerShown?.seasons[0].teams[0].total.points.toString()
-        reboundsLabel.text = ((playerShown?.seasons[0].teams[0].total.defensiveRebounds)! + (playerShown?.seasons[0].teams[0].total.offensiveRebounds)!).toString()               //not sure why I need ! solution
+        //reboundsLabel.text = ((playerShown?.seasons[0].teams[0].total.defensiveRebounds)! + (playerShown?.seasons[0].teams[0].total.offensiveRebounds)!).toString()               //not sure why I need ! solution
         assistsLabel.text = playerShown?.seasons[0].teams[0].total.assists.toString()
         stealsLabel.text = playerShown?.seasons[0].teams[0].total.steals.toString()
         blocksLabel.text = playerShown?.seasons[0].teams[0].total.blocks.toString()

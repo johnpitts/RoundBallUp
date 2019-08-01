@@ -12,6 +12,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     
     var playerFetcherController = PlayerFetcherController()
     var playersToShow: [Player]?
+    var playerForDetail: Player?
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -147,7 +148,17 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
             guard let detailVC = segue.destination as? PlayerDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else  { return }
             
-            detailVC.playerShown = playersToShow?[indexPath.row]
+            
+             let detailPlayerID = playerFetcherController.allPlayers[indexPath.row].id
+            
+            playerFetcherController.fetchOnePlayer(id: detailPlayerID) { (playerForDetail, error) in
+                if let error = error {
+                    NSLog("error fetching one player's stats: \(error)")
+                    return
+                }
+                detailVC.playerShown = self.playerForDetail
+            }
+            
         }
     }
 
