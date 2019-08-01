@@ -21,7 +21,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
         
         playerFetcherController.fetchTeamIDs {    // TEAM ID get FIRST, in order to...
             
-                print("TEAM IDS FETCHED, commencing player ID fetch... \n")
+            print("TEAM IDS FETCHED, commencing player ID fetch... \n")
             // CLOSURES ARE GREAT! for allowing a new procedure to come after a former one which takes time, in this case Player ID get is dependent on Team ID get, so closure allows Team ID fetch to finish before Player ID fetch begins
 
             self.playerFetcherController.fetchPlayerIDs { // ...PLAYER ID get NEXT.
@@ -52,16 +52,12 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
                     NSLog("error fetching one player's stats: \(error)")
                     return
                 }
-                
-            
-                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
-            
         } else { return }
-        
-        
-        
-        
+
         /* search for player or team in
         playerFetcherController.teamsDictionary
         playerFetcherController.playersDictionary
@@ -144,14 +140,10 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     }
     */
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
 
 }

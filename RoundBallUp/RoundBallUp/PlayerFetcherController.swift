@@ -179,6 +179,8 @@ class PlayerFetcherController {
                 
                 let customGrade = self.calculateCustomGrade(forThis: fetchedPlayer)
                 
+                // initialize a player with added customGrade property, before saving to playersToShow
+                
                 self.playersToShow.append(fetchedPlayer)
                 print(self.playersToShow)
                 
