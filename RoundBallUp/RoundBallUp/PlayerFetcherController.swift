@@ -20,6 +20,8 @@ class PlayerFetcherController {
     var allPlayers: [Team.TeamPlayer] = []
     var playersDictionary: [ String : String ] = [:]             // (player) fullName : id
     
+    var playersToShow: [Player] = []
+    
     
     let baseURL = URL(string: "http://api.sportradar.us/nba/trial/v5/en/")!
     let apiKey = "dzb42xyudwxeaa4a9nxey5bg"
@@ -158,7 +160,7 @@ class PlayerFetcherController {
     }
     
     
-    func fetchOnePlayer(id: String, completion: @escaping completionHandler) {
+    func fetchOnePlayer(id: String, completion: @escaping ([Player]?, Error?) -> Void) {
         
         // create URL using Player ID
         let playerURL = baseURL.appendingPathComponent("players").appendingPathComponent(id).appendingPathComponent("profile").appendingPathExtension("json")
@@ -168,7 +170,7 @@ class PlayerFetcherController {
         
         guard let url = components?.url else {
             NSLog("components of  playerSTATS & BoxGrade loader url failed to load properly")
-            completion()
+            completion(nil, nil)
             return
         }
         
@@ -180,12 +182,12 @@ class PlayerFetcherController {
             
             if let error = error {
                 NSLog("Error URLSession dataTask fetching Player RoundballGrade STATS \(error)")
-                completion()
+                completion(nil, error)
                 return
             }
             guard let data = data else {
                 NSLog("Error data didn't exist")
-                completion()
+                completion(nil, error)
                 return
             }
             
@@ -194,28 +196,21 @@ class PlayerFetcherController {
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let player = try decoder.decode(Player.self, from: data)
+                let fetchedPlayer = try decoder.decode(Player.self, from: data)
                 
+                print("\(fetchedPlayer.lastName) points: \(Double(fetchedPlayer.seasons[0].teams[0].total.points))\n")
                 
-                let playersOnThisTeam = team.players
-                for player in playersOnThisTeam {
-                    self.playersDictionary[player.fullName] = player.id
-                    self.allPlayers.append(player)
-                }
-                for (key, value) in self.playersDictionary {
-                    print("\(key), \(value) \n ")
-                }
-                print("\n")
-                //print("allPlayers: \(self.allPlayers)")
+                self.playersToShow.append(fetchedPlayer)
+                
+                completion(self.playersToShow, nil)
+                
                 
             } catch let decodingError {
                 NSLog("Error decoding data to PLAYER model: \(decodingError)")
-                completion()
+                completion(nil, error)
             }
-            completion()
-            
-            }.resume()
-    }  // end fetch one player's stats routine
+        }.resume()
+    }
     
     
     func getWholeTeam(id: String) {

@@ -23,10 +23,11 @@ class Player: Codable {
         
         struct Team: Codable {
             let name: String
+            let total: Total
             
             struct Total: Codable {
                 var minutes: Double?
-                var points: Double?
+                var points: Double
                 var offensiveRebounds: Double?
                 var defensiveRebounds: Double?
                 var steals: Double?

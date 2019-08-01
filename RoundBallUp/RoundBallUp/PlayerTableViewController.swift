@@ -34,8 +34,33 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     
+    func getPlayerID(playerToSearch: String) -> String {
+        return playerFetcherController.playersDictionary[playerToSearch] ?? "Karl-Anthony Towns"
+    }
+    
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("search clicked")
+        
+        if searchBar.text != "" {
+            
+            guard let playerToGrab = searchBar.text else { return }
+            let playerToSearchID = getPlayerID(playerToSearch: playerToGrab)
+            
+            playerFetcherController.fetchOnePlayer(id: playerToSearchID) { (playersToShow, error) in
+                if let error = error {
+                    NSLog("error fetching one player's stats: \(error)")
+                    return
+                }
+            
+                
+            }
+            
+        } else { return }
+        
+        
+        
+        
         /* search for player or team in
         playerFetcherController.teamsDictionary
         playerFetcherController.playersDictionary
