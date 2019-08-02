@@ -15,6 +15,7 @@ class Player: Codable {
     var fullName: String   // ie) Karl-Anthony Towns
     var firstName: String
     var lastName: String
+    
     var seasons: [Year]     // for version 0.1 we will ALWAYS being using the 0th value, which is 2018 NBA Year
     
     struct Year: Codable {

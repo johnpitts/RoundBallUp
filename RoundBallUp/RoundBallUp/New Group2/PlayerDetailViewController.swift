@@ -44,16 +44,18 @@ class PlayerDetailViewController: UIViewController {
         DispatchQueue.main.async {
             self.playerNameLabel.text = playerShown.fullName
             
-            self.gradeLabel.text = "\(self.playerFetcherController.calculateCustomGrade(forThis: playerShown))"   // fix with guard let
+            self.gradeLabel.text = "\(self.playerFetcherController.calculateCustomGrade(forThis: playerShown))"
             
-            //self.minutesLabel.text = playerShown.seasons[0].teams[0].total.minutes
-//            self.pointsLabel.text = playerShown.seasons[0].teams[0].total.points.toString()
-//            //reboundsLabel.text = ((playerShown?.seasons[0].teams[0].total.defensiveRebounds)! + (playerShown?.seasons[0].teams[0].total.offensiveRebounds)!).toString()               //not sure why I need ! solution
-//            self.assistsLabel.text = playerShown.seasons[0].teams[0].total.assists.toString()
-//            self.stealsLabel.text = playerShown.seasons[0].teams[0].total.steals.toString()
-//            self.blocksLabel.text = playerShown.seasons[0].teams[0].total.blocks.toString()
-//            self.foulsLabel.text = playerShown.seasons[0].teams[0].total.personalFouls.toString()
-            self.turnoversLabel.text = "\(playerShown.seasons[0].teams[0].total.turnovers)"
+            self.minutesLabel.text = "Minutes: \(playerShown.seasons[0].teams[0].total.minutes.truncate(0))"
+            
+            self.pointsLabel.text = "Points: \(playerShown.seasons[0].teams[0].total.points.truncate(0))"
+            let ribbies = playerShown.seasons[0].teams[0].total.defensiveRebounds + playerShown.seasons[0].teams[0].total.offensiveRebounds
+            self.reboundsLabel.text = "Rebounds: \(ribbies.truncate(0))"
+            self.assistsLabel.text = "Assists: \(playerShown.seasons[0].teams[0].total.assists.truncate(0))"
+            self.stealsLabel.text = "Steals: \(playerShown.seasons[0].teams[0].total.steals.truncate(0))"
+            self.blocksLabel.text = "Blocks: \(playerShown.seasons[0].teams[0].total.blocks.truncate(0))"
+            self.foulsLabel.text = "P.Fouls: \(playerShown.seasons[0].teams[0].total.personalFouls.truncate(0))"
+            self.turnoversLabel.text = "Turnovers: \(playerShown.seasons[0].teams[0].total.turnovers.truncate(0))"
         }
 
         
@@ -61,6 +63,14 @@ class PlayerDetailViewController: UIViewController {
         // = playerShown.seasons[0].teams[0].total.fieldGoalsAtt.toString
         // = playerShown.seasons[0].teams[0].total.
         // = playerShown.seasons[0].teams[0].total.freeThrowsAtt.toString
+    }
+}
+
+extension Double
+{
+    func truncate(_ places : Int)-> Double
+    {
+        return Double(floor(pow(10.0, Double(places)) * self)/pow(10.0, Double(places)))
     }
 }
 

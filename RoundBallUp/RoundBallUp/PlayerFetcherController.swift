@@ -56,6 +56,8 @@ class PlayerFetcherController {
                 completion()
                 return
             }
+            print(String(data: data, encoding: .utf8)!)
+            
             do {
                 let decoder = JSONDecoder()
                 let league = try decoder.decode(Heirarchy.self, from: data)
@@ -194,7 +196,7 @@ class PlayerFetcherController {
     }
     
     
-    func calculateCustomGrade(forThis player: Player) -> Double {    // will need to add season parameter later
+    func calculateCustomGrade(forThis player: Player) -> String {    // will need to add season parameter later
         //typealias y18ft = seasons[0].teams[0].total
         // use a delegate method to getCustomStatCoeffecients
         let bCoeff = 0.5
@@ -212,9 +214,29 @@ class PlayerFetcherController {
         let b = player.seasons[0].teams[0].total.blocks
         let fta = player.seasons[0].teams[0].total.freeThrowsAtt
         
-        let myCustomGrade = (p + rbVal + s - tov - fga + (bCoeff * b) + (aCoeff * a) + (ftaCoeff * fta) + (pfCoeff * pf)) / min
+        let rawGrade = (p + rbVal + s - tov - fga + (bCoeff * b) + (aCoeff * a) + (ftaCoeff * fta) + (pfCoeff * pf)) / min
         
-        return myCustomGrade
+        var grade = "n/a"
+        switch rawGrade {
+        case ..<0:
+            grade = "F"
+        case 0.000..<0.080:
+            grade = "D"
+        case 0.800..<1.200:
+            grade = "C"
+        case 0.120..<0.199:
+            grade = "B"
+        case 0.199..<0.249:
+            grade = "A-"
+        case 0.249..<0.300:
+            grade = "A"
+        case 0.300...:
+            grade = "A+"
+        default:
+            grade = "n/a"
+        }
+        //if birthDate > 1995 ? return "\(grade)+" : return grade
+        return grade
     }
     
     
