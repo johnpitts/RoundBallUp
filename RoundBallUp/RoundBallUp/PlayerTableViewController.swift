@@ -88,7 +88,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-          searchBar.placeholder = "Enter Player or Team to get Custom Grades"
+          searchBar.placeholder = "Enter Player Name (first/last/full) or Team"
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.searchBar.text = ""
@@ -111,7 +111,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(playerFetcherController.allPlayers.count)
-        print(filteredPlayers.count ?? 0)
+        print(filteredPlayers.count)
         
         if isSearching {
             return filteredPlayers.count
@@ -143,8 +143,12 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
             guard let detailVC = segue.destination as? PlayerDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else  { return }
             
-            
-             let detailPlayerID = playerFetcherController.allPlayers[indexPath.row].id
+            let detailPlayerID: String
+            if isSearching {
+                detailPlayerID = filteredPlayers[indexPath.row].id
+            } else {
+                detailPlayerID = playerFetcherController.allPlayers[indexPath.row].id
+            }
             
             playerFetcherController.fetchOnePlayer(id: detailPlayerID) { (playerForDetail, error) in
                 if let error = error {

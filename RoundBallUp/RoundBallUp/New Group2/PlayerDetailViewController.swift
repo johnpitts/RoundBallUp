@@ -47,16 +47,16 @@ class PlayerDetailViewController: UIViewController {
             self.gradeLabel.text = "\(self.playerFetcherController.calculateCustomGrade(forThis: playerShown))"
             
             
-            self.minutesLabel.text = "Minutes: \(playerShown.seasons[0].teams[0].total.minutes.truncate(0))"
+            self.minutesLabel.text = "Minutes: \(Int(playerShown.seasons[0].teams[0].total.minutes))"
             
-            self.pointsLabel.text = "Points: \(playerShown.seasons[0].teams[0].total.points.truncate(0))"
+            self.pointsLabel.text = "Points: \(Int(playerShown.seasons[0].teams[0].total.points))"
             let ribbies = playerShown.seasons[0].teams[0].total.defensiveRebounds + playerShown.seasons[0].teams[0].total.offensiveRebounds
-            self.reboundsLabel.text = "Rebounds: \(ribbies.truncate(0))"
-            self.assistsLabel.text = "Assists: \(playerShown.seasons[0].teams[0].total.assists.truncate(0))"
-            self.stealsLabel.text = "Steals: \(playerShown.seasons[0].teams[0].total.steals.truncate(0))"
-            self.blocksLabel.text = "Blocks: \(playerShown.seasons[0].teams[0].total.blocks.truncate(0))"
-            self.foulsLabel.text = "P.Fouls: \(playerShown.seasons[0].teams[0].total.personalFouls.truncate(0))"
-            self.turnoversLabel.text = "Turnovers: \(playerShown.seasons[0].teams[0].total.turnovers.truncate(0))"
+            self.reboundsLabel.text = "Rebounds: \(Int(ribbies))"
+            self.assistsLabel.text = "Assists: \(Int(playerShown.seasons[0].teams[0].total.assists))"
+            self.stealsLabel.text = "Steals: \(Int(playerShown.seasons[0].teams[0].total.steals))"
+            self.blocksLabel.text = "Blocks: \(Int(playerShown.seasons[0].teams[0].total.blocks))"
+            self.foulsLabel.text = "P.Fouls: \(Int(playerShown.seasons[0].teams[0].total.personalFouls))"
+            self.turnoversLabel.text = "Turnovers: \(Int(playerShown.seasons[0].teams[0].total.turnovers))"
         }
 
         
@@ -67,10 +67,8 @@ class PlayerDetailViewController: UIViewController {
     }
 }
 
-extension Double
-{
-    func truncate(_ places : Int)-> Double
-    {
+extension Double  {
+    func truncate(_ places : Int)-> Double  {
         return Double(floor(pow(10.0, Double(places)) * self)/pow(10.0, Double(places)))
     }
 }
