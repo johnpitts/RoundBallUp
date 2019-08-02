@@ -46,6 +46,7 @@ class PlayerDetailViewController: UIViewController {
             
             self.gradeLabel.text = "\(self.playerFetcherController.calculateCustomGrade(forThis: playerShown))"
             
+            
             self.minutesLabel.text = "Minutes: \(playerShown.seasons[0].teams[0].total.minutes.truncate(0))"
             
             self.pointsLabel.text = "Points: \(playerShown.seasons[0].teams[0].total.points.truncate(0))"

@@ -56,7 +56,7 @@ class PlayerFetcherController {
                 completion()
                 return
             }
-            print(String(data: data, encoding: .utf8)!)
+            //print(String(data: data, encoding: .utf8)!)
             
             do {
                 let decoder = JSONDecoder()
@@ -73,9 +73,9 @@ class PlayerFetcherController {
                         }
                     }
                 }
-                for (key, value) in self.teamsDictionary {
-                    print("\(key), \(value) ")
-                }
+//                for (key, value) in self.teamsDictionary {
+//                    print("\(key), \(value) ")
+//                }
                 //print("allTeams: \(self.allTeams)")
             } catch let decodingError {
                 NSLog("Error decoding data to Heirarchy model: \(decodingError)")
@@ -128,10 +128,9 @@ class PlayerFetcherController {
                         self.playersDictionary[player.fullName] = player.id
                         self.allPlayers.append(player)
                     }
-                    for (key, value) in self.playersDictionary {
-                        print("\(key), \(value) \n ")
-                    }
-                    print("\n")
+//                    for (key, value) in self.playersDictionary {
+//                        print("\(key), \(value) \n ")
+//                    }
                     //print("allPlayers: \(self.allPlayers)")
                     
                 } catch let decodingError {
