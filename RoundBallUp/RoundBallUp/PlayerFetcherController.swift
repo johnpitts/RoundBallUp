@@ -176,7 +176,7 @@ class PlayerFetcherController {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let fetchedPlayer = try decoder.decode(Player.self, from: data)
                 
-                print("\(fetchedPlayer.lastName) points: \(Double(fetchedPlayer.seasons[0].teams[0].total.points))")
+                //print("\(fetchedPlayer.lastName) points: \(Double(fetchedPlayer.seasons[0].teams[0].total.points))")
                 
                 let customGrade = self.calculateCustomGrade(forThis: fetchedPlayer)
                 print("...and his grade is: \(customGrade)\n")
@@ -214,6 +214,7 @@ class PlayerFetcherController {
         let fta = player.seasons[0].teams[0].total.freeThrowsAtt
         
         let rawGrade = (p + rbVal + s - tov - fga + (bCoeff * b) + (aCoeff * a) + (ftaCoeff * fta) + (pfCoeff * pf)) / min
+        print("\(rawGrade) fga: \(fga)  fta: \(fta)")
         
         var grade = "n/a"
         switch rawGrade {

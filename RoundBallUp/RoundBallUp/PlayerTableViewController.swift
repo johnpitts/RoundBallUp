@@ -13,10 +13,10 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     var playerFetcherController = PlayerFetcherController()
     var playersToShow: [Player]?
     var playerForDetail: Player?
-    var filteredPlayers: [Team.TeamPlayer]?
+    var filteredPlayers: [Team.TeamPlayer] = []
     
     @IBOutlet weak var searchBar: UISearchBar!
-    var isSearching: Bool?                      //refactor to default value of false and you don't need the guard statements!
+    var isSearching: Bool = false                    //refactor to default value of false and you don't need the guard statements!
     
 
     override func viewDidLoad() {
@@ -28,7 +28,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
             print("TEAM IDS FETCHED, commencing player ID fetch... \n")
             // CLOSURES ARE GREAT! for allowing a new procedure to come after a former one which takes time, in this case Player ID get is dependent on Team ID get, so closure allows Team ID fetch to finish before Player ID fetch begins
 
-            self.playerFetcherController.fetchPlayerIDs { // ...PLAYER ID get NEXT.
+            self.playerFetcherController.fetchPlayerIDs { // ...in order to get Player IDs
                 
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
@@ -53,14 +53,15 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
             guard let playerToGrab = searchBar.text else { return }   // does searchBar need to be self/global too?
             //let playerToSearchID = getPlayerID(playerToSearch: playerToGrab)
             
-            self.filteredPlayers = []
-            self.filteredPlayers = playerFetcherController.allPlayers.filter({$0.fullName == playerToGrab || $0.firstName == playerToGrab || $0.lastName == playerToGrab})
+            print("searched for: \(playerToGrab)")
+            
+            filteredPlayers = []
+            filteredPlayers = playerFetcherController.allPlayers.filter({$0.fullName == playerToGrab || $0.firstName == playerToGrab || $0.lastName == playerToGrab})
             //print(filteredPlayers[0].fullName)
             
             self.tableView.reloadData()
-            
-            self.isSearching = false
-            
+  
+        // This was used when searching was going to go right to the DetailVC
 //            playerFetcherController.fetchOnePlayer(id: playerToSearchID) { (playerWithStats, error) in
 //                if let error = error {
 //                    NSLog("error fetching one player's stats: \(error)")
@@ -70,7 +71,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
 //                    self.tableView.reloadData()
 //                }
 //            }
-        } else { return }
+        } else { isSearching = false; return }
 
         /* search for player or team in
         playerFetcherController.teamsDictionary
@@ -90,7 +91,14 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
           searchBar.placeholder = "Enter Player or Team to get Custom Grades"
         DispatchQueue.main.async {
             self.tableView.reloadData()
+            self.searchBar.text = ""
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        isSearching = false
     }
     
 
@@ -103,11 +111,9 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(playerFetcherController.allPlayers.count)
-        print(filteredPlayers?.count ?? 0)
+        print(filteredPlayers.count ?? 0)
         
-        if let isSearching = self.isSearching,
-            isSearching {
-            guard let filteredPlayers = filteredPlayers else { return 0 }
+        if isSearching {
             return filteredPlayers.count
         } else {
             return playerFetcherController.allPlayers.count
@@ -118,9 +124,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BallerCell", for: indexPath)
         
-        if let isSearching = self.isSearching,
-            isSearching {                                       //
-            guard let filteredPlayers = self.filteredPlayers else { let object = playerFetcherController.allPlayers[indexPath.row]; cell.textLabel?.text = object.fullName; return cell }
+        if isSearching {
             let object = filteredPlayers[indexPath.row]
             cell.textLabel?.text = object.fullName
             return cell
