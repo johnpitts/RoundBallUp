@@ -145,6 +145,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -156,6 +157,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xtz-PG-Nql"/>
                     </view>
+                    <navigationItem key="navigationItem" id="EyW-n2-8O0">
+                        <barButtonItem key="rightBarButtonItem" title="My Stats" id="t2S-bL-tRQ">
+                            <connections>
+                                <segue destination="EBM-Jz-ydL" kind="show" id="pi4-q1-crl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="assistsLabel" destination="EMG-l5-jiK" id="kSa-Me-XU6"/>
                         <outlet property="blocksLabel" destination="MVU-i6-f6n" id="1FQ-gm-t6U"/>
@@ -172,6 +180,214 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="abe-82-bPI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1701.449275362319" y="137.94642857142856"/>
+        </scene>
+        <!--Customize Your Stats!-->
+        <scene sceneID="C9x-ox-ZJX">
+            <objects>
+                <viewController id="EBM-Jz-ydL" customClass="CustomizeMyStatsViewController" customModule="RoundBallUp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Tph-sa-KMm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="CSw-SA-m8v" userLabel="Stack View coeffs">
+                                <rect key="frame" x="0.0" y="140" width="414" height="440"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZE7-Jb-0SH">
+                                        <rect key="frame" x="0.0" y="0.0" width="405.5" height="128"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="128" id="fAe-xd-djW"/>
+                                        </constraints>
+                                        <string key="text">Here you can change the algorithm for how players are graded.  Enter your own factors for how many POINTS each stat is worth.  For example: If you think an assist is worth more than 1 point at 1.5, enter a coefficient of 1.5.  If you think blocks are worth less than 1 point, you could enter 0.5 for half a point.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="POINTS coefficient" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LTv-Kf-VkD">
+                                        <rect key="frame" x="0.0" y="144" width="144.5" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Ski-rS-srx"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="REBOUNDS coefficient" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="efw-Yw-pAc">
+                                        <rect key="frame" x="0.0" y="190" width="169.5" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="VYb-wh-x2x"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="STEALS coefficient" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CQM-dE-o4f">
+                                        <rect key="frame" x="0.0" y="236" width="145" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="ida-C3-c1Q"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="BLOCKS coefficient" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ewa-Co-nhQ">
+                                        <rect key="frame" x="0.0" y="282" width="148" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="mDJ-xp-HKu"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ASSISTS coefficient" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="at9-J0-tdb">
+                                        <rect key="frame" x="0.0" y="328" width="150.5" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="4bj-V6-7hc"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="TURNOVER coefficient" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wph-jS-Jin">
+                                        <rect key="frame" x="0.0" y="374" width="168.5" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="lDF-GZ-SXX"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="FOULS coefficient" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sui-n3-xio">
+                                        <rect key="frame" x="0.0" y="420" width="139" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="I26-F5-q17"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="440" id="Dws-aM-JMI"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2Jl-UA-0TC" userLabel="Stack View 3rd party grades">
+                                <rect key="frame" x="90.5" y="596" width="233" height="196"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="... or use 3rd Party Grades!!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yt6-Jx-vjx">
+                                        <rect key="frame" x="0.0" y="0.0" width="211" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="mFQ-wF-7yl"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WcX-c9-H6U">
+                                        <rect key="frame" x="0.0" y="52" width="43" height="40"/>
+                                        <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="yzC-eU-tcb"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="PER">
+                                            <color key="titleColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" restorationIdentifier="bpm buttons" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="Ant-P2-6f9" userLabel="Stack View bpm buttons">
+                                        <rect key="frame" x="0.0" y="104" width="233" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HkV-6A-yzO">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="40"/>
+                                                <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="0Eo-ca-pj0"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <state key="normal" title="BPM">
+                                                    <color key="titleColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="20"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p7D-g9-zdi">
+                                                <rect key="frame" x="74" y="0.0" width="67" height="40"/>
+                                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="qur-xn-nL0"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <state key="normal" title="DBPM">
+                                                    <color key="titleColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="20"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NaD-VI-7Q1">
+                                                <rect key="frame" x="165" y="0.0" width="68" height="40"/>
+                                                <color key="backgroundColor" red="0.45138680930000002" green="0.99309605359999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="EC1-ie-vYi"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <state key="normal" title="OBPM">
+                                                    <color key="titleColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="20"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOl-YU-Ha5">
+                                        <rect key="frame" x="0.0" y="156" width="64" height="40"/>
+                                        <color key="backgroundColor" red="0.246068645" green="0.68573416099999995" blue="0.23669699199999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="1n5-aY-jlF"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                                        <state key="normal" title="Win Shares">
+                                            <color key="titleColor" red="0.96862745098039216" green="0.79224024035753426" blue="0.70219403171643835" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="2Jl-UA-0TC" firstAttribute="top" secondItem="CSw-SA-m8v" secondAttribute="bottom" constant="16" id="61S-Gu-hGd"/>
+                            <constraint firstItem="uCi-v5-8a6" firstAttribute="bottom" secondItem="2Jl-UA-0TC" secondAttribute="bottom" id="7J4-5b-omr"/>
+                            <constraint firstItem="CSw-SA-m8v" firstAttribute="top" secondItem="uCi-v5-8a6" secondAttribute="top" id="OYT-1Q-e5m"/>
+                            <constraint firstItem="CSw-SA-m8v" firstAttribute="leading" secondItem="uCi-v5-8a6" secondAttribute="leading" id="k46-BT-Cx1"/>
+                            <constraint firstItem="2Jl-UA-0TC" firstAttribute="centerX" secondItem="Tph-sa-KMm" secondAttribute="centerX" id="kwS-Mr-KRx"/>
+                            <constraint firstAttribute="trailing" secondItem="CSw-SA-m8v" secondAttribute="trailing" id="qD8-Mp-D3y"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="uCi-v5-8a6"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Customize Your Stats!" id="ucp-Nm-gRI">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="8O2-eg-vvF"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KnV-GI-ZBD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2482.608695652174" y="-157.36607142857142"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4mK-3h-7uX">

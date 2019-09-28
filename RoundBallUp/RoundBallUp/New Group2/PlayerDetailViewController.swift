@@ -15,11 +15,11 @@ class PlayerDetailViewController: UIViewController {
             updateViews()
         }
     }
+    
     var playerFetcherController = PlayerFetcherController()
     
     @IBOutlet weak var playerNameLabel: UILabel!
     @IBOutlet weak var gradeLabel: UILabel!
-    
     
     @IBOutlet weak var minutesLabel: UILabel!
     @IBOutlet weak var pointsLabel: UILabel!
@@ -35,17 +35,16 @@ class PlayerDetailViewController: UIViewController {
         super.viewDidLoad()
         updateViews()
     }
+    
 
     func updateViews() {
-        
-        
+
         guard isViewLoaded,
             let playerShown = playerShown else { return }
         DispatchQueue.main.async {
             self.playerNameLabel.text = playerShown.fullName
             
             self.gradeLabel.text = "\(self.playerFetcherController.calculateCustomGrade(forThis: playerShown))"
-            
             
             self.minutesLabel.text = "Minutes: \(Int(playerShown.seasons[0].teams[0].total.minutes))"
             
@@ -59,7 +58,7 @@ class PlayerDetailViewController: UIViewController {
             self.turnoversLabel.text = "Turnovers: \(Int(playerShown.seasons[0].teams[0].total.turnovers))"
         }
 
-        
+        //
         //pointsLabel.text = String(playerShown?.seasons[0].teams[0].total.points)
         // = playerShown.seasons[0].teams[0].total.fieldGoalsAtt.toString
         // = playerShown.seasons[0].teams[0].total.
@@ -79,17 +78,3 @@ extension Double  {
 //    }
 //}
 
-
-
-
-
-
-/*
- // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
- // Get the new view controller using segue.destination.
- // Pass the selected object to the new view controller.
- }
- */

@@ -88,7 +88,8 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-          searchBar.placeholder = "Enter Player Name (first/last/full) or Team"
+        
+        searchBar.placeholder = "Enter Player Name (first/last/full) or Team"
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.searchBar.text = ""

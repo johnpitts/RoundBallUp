@@ -146,11 +146,13 @@ class PlayerFetcherController {
     
     func fetchOnePlayer(id: String, completion: @escaping (Player?, Error?) -> Void) {
         
+        // assembles a url from base + components + api key (query item)
         let playerURL = baseURL.appendingPathComponent("players").appendingPathComponent(id).appendingPathComponent("profile").appendingPathExtension("json")
         var components = URLComponents(url: playerURL, resolvingAgainstBaseURL: true)
         let keyQuery = URLQueryItem(name: "api_key", value: apiKey)
         components?.queryItems = [keyQuery]
         
+        // converts url + queryItem components to url type, unless 'api key' wasn't present in which case we exit this network call before it starts
         guard let url = components?.url else {
             NSLog("components of  playerSTATS & BoxGrade loader url failed to load properly")
             completion(nil, nil)
@@ -240,9 +242,11 @@ class PlayerFetcherController {
     }
     
     
+    
+    
+    
+    // in the future we will want to get TEAM stats rather than player
     func getWholeTeam(id: String) {
-        
-        
         
     }
     

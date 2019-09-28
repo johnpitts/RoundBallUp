@@ -17,6 +17,7 @@
 		FCD14E8B22EFBC250068C033 /* PlayerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD14E8A22EFBC250068C033 /* PlayerTableViewController.swift */; };
 		FCD14E8F22F1E2CE0068C033 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD14E8E22F1E2CE0068C033 /* Team.swift */; };
 		FCD14E9222F3366A0068C033 /* PlayerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD14E9122F3366A0068C033 /* PlayerDetailViewController.swift */; };
+		FCEB4E19233F8C350017945C /* CustomizeMyStatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEB4E18233F8C350017945C /* CustomizeMyStatsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		FCD14E8A22EFBC250068C033 /* PlayerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlayerTableViewController.swift; path = ../PlayerTableViewController.swift; sourceTree = "<group>"; };
 		FCD14E8E22F1E2CE0068C033 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		FCD14E9122F3366A0068C033 /* PlayerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailViewController.swift; sourceTree = "<group>"; };
+		FCEB4E18233F8C350017945C /* CustomizeMyStatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeMyStatsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,8 +67,8 @@
 			isa = PBXGroup;
 			children = (
 				FCD14E7222EF61670068C033 /* AppDelegate.swift */,
-				FCD14E9022F224400068C033 /* New Group2 */,
 				FCD14E7622EF61670068C033 /* Main.storyboard */,
+				FCD14E9022F224400068C033 /* New Group2 */,
 				FCD14E8D22F1E0950068C033 /* New Group1 */,
 				FCD14E8C22F1E0800068C033 /* New Group */,
 				FCD14E7922EF616A0068C033 /* Assets.xcassets */,
@@ -97,6 +99,7 @@
 		FCD14E9022F224400068C033 /* New Group2 */ = {
 			isa = PBXGroup;
 			children = (
+				FCEB4E18233F8C350017945C /* CustomizeMyStatsViewController.swift */,
 				FCD14E9122F3366A0068C033 /* PlayerDetailViewController.swift */,
 				FCD14E8A22EFBC250068C033 /* PlayerTableViewController.swift */,
 			);
@@ -180,6 +183,7 @@
 				FCD14E8722EFA15C0068C033 /* Hierarchy.swift in Sources */,
 				FCD14E8522EF8EAF0068C033 /* Player.swift in Sources */,
 				FCD14E8922EFB9140068C033 /* PlayerFetcherController.swift in Sources */,
+				FCEB4E19233F8C350017945C /* CustomizeMyStatsViewController.swift in Sources */,
 				FCD14E7322EF61670068C033 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
