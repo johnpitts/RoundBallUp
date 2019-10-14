@@ -21,20 +21,24 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         searchBar.delegate = self
         
-        playerFetcherController.fetchTeamIDs {    // TEAM ID get FIRST, in order to...
-            
-            print("TEAM IDS FETCHED, commencing player ID fetch... \n")
-            // CLOSURES ARE GREAT! for allowing a new procedure to come after a former one which takes time, in this case Player ID get is dependent on Team ID get, so closure allows Team ID fetch to finish before Player ID fetch begins
-
-            self.playerFetcherController.fetchPlayerIDs { // ...in order to get Player IDs
+        if playerFetcherController.allPlayers.isEmpty {
+          
+            playerFetcherController.fetchTeamIDs {    // TEAM ID get FIRST, in order to...
                 
+                print("TEAM IDS FETCHED, commencing player ID fetch... \n")
+                // CLOSURES ARE GREAT! for allowing a new procedure to come after a former one which takes time, in this case Player ID get is dependent on Team ID get, so closure allows Team ID fetch to finish before Player ID fetch begins
+                
+                self.playerFetcherController.fetchPlayerIDs { // ...in order to get Player IDs
+                    
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         print("players fetched \n")
                     }
                 }
+            }
         }
     }
     
@@ -89,10 +93,11 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        searchBar.placeholder = "Enter Player Name (first/last/full) or Team"
+        searchBar.placeholder = "Enter player name" // or team"
         DispatchQueue.main.async {
-            self.tableView.reloadData()
             self.searchBar.text = ""
+            
+            self.tableView.reloadData()
         }
     }
     
@@ -115,6 +120,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
         print(filteredPlayers.count)
         
         if isSearching {
+            isSearching = !isSearching
             return filteredPlayers.count
         } else {
             return playerFetcherController.allPlayers.count

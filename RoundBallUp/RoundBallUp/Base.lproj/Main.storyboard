@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--CRYSTAL BALLERZ-->
+        <!--NBA Players-->
         <scene sceneID="njh-p5-KqO">
             <objects>
                 <tableViewController id="Qy6-QD-hds" customClass="PlayerTableViewController" customModule="RoundBallUp" customModuleProvider="target" sceneMemberID="viewController">
@@ -64,7 +64,7 @@
                             <outlet property="delegate" destination="Qy6-QD-hds" id="xu2-J9-22I"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="CRYSTAL BALLERZ" largeTitleDisplayMode="always" id="F0F-sv-cqW"/>
+                    <navigationItem key="navigationItem" title="NBA Players" largeTitleDisplayMode="always" id="F0F-sv-cqW"/>
                     <connections>
                         <outlet property="searchBar" destination="ctX-eA-CM2" id="9w0-rT-4sm"/>
                     </connections>
@@ -297,6 +297,9 @@
                                                 <integer key="value" value="20"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="perSelected:" destination="EBM-Jz-ydL" eventType="touchUpInside" id="WMe-oM-eeW"/>
+                                        </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" restorationIdentifier="bpm buttons" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="Ant-P2-6f9" userLabel="Stack View bpm buttons">
                                         <rect key="frame" x="0.0" y="104" width="233" height="40"/>
@@ -305,7 +308,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="40"/>
                                                 <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="0Eo-ca-pj0"/>
+                                                    <constraint firstAttribute="height" constant="40" id="oIh-WW-h45"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <state key="normal" title="BPM">
@@ -316,6 +319,9 @@
                                                         <integer key="value" value="20"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="bpmSelected:" destination="EBM-Jz-ydL" eventType="touchUpInside" id="pkc-46-ORc"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p7D-g9-zdi">
                                                 <rect key="frame" x="74" y="0.0" width="67" height="40"/>
@@ -332,6 +338,9 @@
                                                         <integer key="value" value="20"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="dbpmTapped:" destination="EBM-Jz-ydL" eventType="touchUpInside" id="KiZ-db-yAa"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NaD-VI-7Q1">
                                                 <rect key="frame" x="165" y="0.0" width="68" height="40"/>
@@ -348,6 +357,9 @@
                                                         <integer key="value" value="20"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="obpmTapped:" destination="EBM-Jz-ydL" eventType="touchUpInside" id="cBH-MK-rZJ"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -366,6 +378,9 @@
                                                 <integer key="value" value="20"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="winSharesTapped:" destination="EBM-Jz-ydL" eventType="touchUpInside" id="HiF-gE-WuT"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -382,8 +397,21 @@
                         <viewLayoutGuide key="safeArea" id="uCi-v5-8a6"/>
                     </view>
                     <navigationItem key="navigationItem" title="Customize Your Stats!" id="ucp-Nm-gRI">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="8O2-eg-vvF"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="8O2-eg-vvF">
+                            <connections>
+                                <action selector="saveCustomStatModelTapped:" destination="EBM-Jz-ydL" id="3S3-jg-0dR"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="assistsCoeffTextField" destination="at9-J0-tdb" id="E7C-Hd-zaE"/>
+                        <outlet property="blocksCoeffTextField" destination="ewa-Co-nhQ" id="jnT-Zt-euy"/>
+                        <outlet property="foulsCoeffTextField" destination="Sui-n3-xio" id="ra7-Gq-NG7"/>
+                        <outlet property="ptsCoeffTextField" destination="LTv-Kf-VkD" id="1R1-nE-Ouv"/>
+                        <outlet property="reboundsCoeffTextField" destination="efw-Yw-pAc" id="Tc8-mG-X2a"/>
+                        <outlet property="stealsCoeffTextField" destination="CQM-dE-o4f" id="iQS-1D-wRe"/>
+                        <outlet property="turnoverCoeffTextField" destination="Wph-jS-Jin" id="PVf-T6-7ec"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KnV-GI-ZBD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

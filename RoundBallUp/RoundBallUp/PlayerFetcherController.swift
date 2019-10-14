@@ -22,10 +22,23 @@ class PlayerFetcherController {
     
     var playersToShow: [Player] = []
     
+    private var persistentURL: URL? {
+        let fileManager = FileManager.default
+        guard let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        
+        print("File Manager Documents stored at: \(documents.path)")
+        return documents.appendingPathComponent("players.plist")
+    }
     
     let baseURL = URL(string: "http://api.sportradar.us/nba/trial/v5/en/")!
     let apiKey = "dzb42xyudwxeaa4a9nxey5bg"
     typealias completionHandler = ()->Void
+    
+    
+    init() {
+        //TO DO? this gets hit every time, but should probably only get hit once when the app first starts
+        loadFromPersistentStore()
+    }
     
     
     func fetchTeamIDs(completion: @escaping completionHandler) {
@@ -127,6 +140,8 @@ class PlayerFetcherController {
                     for player in playersOnThisTeam {
                         self.playersDictionary[player.fullName] = player.id
                         self.allPlayers.append(player)
+                        
+                        self.saveToPersistentStore()
                     }
 //                    for (key, value) in self.playersDictionary {
 //                        print("\(key), \(value) \n ")
@@ -241,13 +256,39 @@ class PlayerFetcherController {
         return grade
     }
     
+    func saveToPersistentStore() {
+        guard let url = persistentURL else { return }
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(allPlayers)
+            try data.write(to: url)
+        } catch {
+            NSLog("Error saving Players array")
+        }
+    }
+    
+    func loadFromPersistentStore() {
+        let fileManager = FileManager.default
+        
+        guard let url = persistentURL,
+            fileManager.fileExists(atPath: url.path) else { return }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = PropertyListDecoder()
+            allPlayers = try decoder.decode([Team.TeamPlayer].self, from: data)
+        } catch {
+            NSLog("Error loading data from disk... allPlayers array \(error)")
+        }
+    }
+    
     
     
     
     
     // in the future we will want to get TEAM stats rather than player
     func getWholeTeam(id: String) {
-        
+        // filter results by team and present a UI the user can select to get a whole team's grades, but do this after you persist the data.
     }
     
     
