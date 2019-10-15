@@ -16,12 +16,13 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     var filteredPlayers: [Team.TeamPlayer] = []
     
     @IBOutlet weak var searchBar: UISearchBar!
-    var isSearching: Bool = false                    //refactor to default value of false and you don't need the guard statements!
+    var isSearching: Bool = false
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "NBA Players"     //Why is this causing a constraint error??  conflicting with searchBar view?
         searchBar.delegate = self
         
         if playerFetcherController.allPlayers.isEmpty {
@@ -49,32 +50,18 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("search clicked")
         
         if searchBar.text != "" {
             self.isSearching = true
             
-            guard let playerToGrab = searchBar.text else { return }   // does searchBar need to be self/global too?
+            guard let playerToGrab = searchBar.text else { return }
             //let playerToSearchID = getPlayerID(playerToSearch: playerToGrab)
-            
-            print("searched for: \(playerToGrab)")
             
             filteredPlayers = []
             filteredPlayers = playerFetcherController.allPlayers.filter({$0.fullName == playerToGrab || $0.firstName == playerToGrab || $0.lastName == playerToGrab})
-            //print(filteredPlayers[0].fullName)
             
             self.tableView.reloadData()
   
-        // This was used when searching was going to go right to the DetailVC
-//            playerFetcherController.fetchOnePlayer(id: playerToSearchID) { (playerWithStats, error) in
-//                if let error = error {
-//                    NSLog("error fetching one player's stats: \(error)")
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
-//            }
         } else { isSearching = false; return }
 
         /* search for player or team in
@@ -93,34 +80,25 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        searchBar.placeholder = "Enter player name" // or team"
         DispatchQueue.main.async {
+            self.searchBar.placeholder = "Enter player name" // or team"
             self.searchBar.text = ""
-            
             self.tableView.reloadData()
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
-        isSearching = false
     }
     
 
     // MARK: - Table view data source
 
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // You will want to break all players down into team-sections when displayed
+        return 1
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(playerFetcherController.allPlayers.count)
-        print(filteredPlayers.count)
+        print("tableview reload: \(playerFetcherController.allPlayers.count)")
         
         if isSearching {
-            isSearching = !isSearching
             return filteredPlayers.count
         } else {
             return playerFetcherController.allPlayers.count
@@ -134,13 +112,14 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
         if isSearching {
             let object = filteredPlayers[indexPath.row]
             cell.textLabel?.text = object.fullName
+            cell.detailTextLabel?.text = object.primaryPosition
             return cell
         } else {
             let object = playerFetcherController.allPlayers[indexPath.row]
             cell.textLabel?.text = object.fullName
+            cell.detailTextLabel?.text = object.primaryPosition
             return cell
         }
-        //cell.detailTextLabel?.text = object.gradeScore   // can only be used when a new API is found
     }
     
 
@@ -153,6 +132,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
             let detailPlayerID: String
             if isSearching {
                 detailPlayerID = filteredPlayers[indexPath.row].id
+                isSearching = !isSearching                              // does this go best here?
             } else {
                 detailPlayerID = playerFetcherController.allPlayers[indexPath.row].id
             }
@@ -164,7 +144,7 @@ class PlayerTableViewController: UITableViewController, UISearchBarDelegate {
                 }
                 self.playerForDetail = playerForDetail
                 detailVC.playerShown = self.playerForDetail
-            }  // end of fetch
+            }
         }
     }
 

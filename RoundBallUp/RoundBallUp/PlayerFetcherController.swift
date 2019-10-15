@@ -26,7 +26,7 @@ class PlayerFetcherController {
         let fileManager = FileManager.default
         guard let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
         
-        print("File Manager Documents stored at: \(documents.path)")
+        print("File Manager accessed \n")
         return documents.appendingPathComponent("players.plist")
     }
     
@@ -193,14 +193,9 @@ class PlayerFetcherController {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let fetchedPlayer = try decoder.decode(Player.self, from: data)
                 
-                //print("\(fetchedPlayer.lastName) points: \(Double(fetchedPlayer.seasons[0].teams[0].total.points))")
-                
-                let customGrade = self.calculateCustomGrade(forThis: fetchedPlayer)
-                print("...and his grade is: \(customGrade)\n")
-                // initialize a player with added customGrade property, before saving to playersToShow
+                print("fetched: \(fetchedPlayer.lastName) points: \(Double(fetchedPlayer.seasons[0].teams[0].total.points))")
                 
                 self.playersToShow.append(fetchedPlayer)
-                print(self.playersToShow)
                 
                 completion(fetchedPlayer, nil)
                 
@@ -231,17 +226,17 @@ class PlayerFetcherController {
         let fta = player.seasons[0].teams[0].total.freeThrowsAtt
         
         let rawGrade = (p + rbVal + s - tov - fga + (bCoeff * b) + (aCoeff * a) + (ftaCoeff * fta) + (pfCoeff * pf)) / min
-        print("\(rawGrade) fga: \(fga)  fta: \(fta)")
+        print("Player's Raw Grade = \(rawGrade)")   // fga & fta also available
         
         var grade = "n/a"
         switch rawGrade {
         case ..<0:
             grade = "F"
-        case 0.000..<0.080:
+        case 0.000..<0.050:
             grade = "D"
-        case 0.800..<1.200:
+        case 0.050..<0.100:
             grade = "C"
-        case 0.120..<0.199:
+        case 0.100..<0.199:
             grade = "B"
         case 0.199..<0.249:
             grade = "A-"
